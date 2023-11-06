@@ -1,9 +1,25 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { contextProvider } from "../Authprovider";
+import toast from "react-hot-toast";
 const Login = () => {
   const [passwordShow, setPasswordShow] = useState(true);
+  const { googleLogin, myTheme } = useContext(contextProvider);
+  const handleGoogle = () => {
+    const toastLoading = toast.loading("login in processing", myTheme);
+    googleLogin()
+    .then(() => {
+      toast.success("Login Successfull", { ...myTheme, id: toastLoading })
+    })
+    .catch((error)=>{
+        const errorMessage = error?.message
+        ?.replace("Firebase: Error (", "")
+        ?.replace(")", "");
+        toast.error(errorMessage, { ...myTheme, id: toastLoading });
+    })
+  };
   return (
     <div className="min-h-screen max-w-[1200px] mx-auto">
       <div className="hero-content flex-col">
@@ -13,6 +29,7 @@ const Login = () => {
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl border border-[#0B666A] bg-base-100">
           <form className="card-body">
             <button
+              onClick={handleGoogle}
               type="button"
               className="py-2 mb-2 border-2 border-[#0B666A] rounded-xl w-full"
             >
@@ -22,10 +39,10 @@ const Login = () => {
               </div>
             </button>
             <div className="flex justify-around items-center px-4">
-                <div className="bg-[#0B666A] h-[2px] w-2/5"></div>
-                <p className="text-center">or</p>
-                <div className="bg-[#0B666A] h-0.5 w-2/5"></div>
-              </div>
+              <div className="bg-[#0B666A] h-[2px] w-2/5"></div>
+              <p className="text-center">or</p>
+              <div className="bg-[#0B666A] h-0.5 w-2/5"></div>
+            </div>
             <div className="form-control">
               <label className="label" htmlFor="email">
                 <span className="label-text capitalize ps-2 text-[#0B666A]">

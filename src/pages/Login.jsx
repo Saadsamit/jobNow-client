@@ -1,24 +1,48 @@
 import { useContext, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { contextProvider } from "../Authprovider";
 import toast from "react-hot-toast";
 const Login = () => {
   const [passwordShow, setPasswordShow] = useState(true);
-  const { googleLogin, myTheme } = useContext(contextProvider);
+  const { googleLogin, myTheme, loginUser } = useContext(contextProvider);
+  const navigate = useNavigate()
   const handleGoogle = () => {
     const toastLoading = toast.loading("login in processing", myTheme);
     googleLogin()
-    .then(() => {
-      toast.success("Login Successfull", { ...myTheme, id: toastLoading })
-    })
-    .catch((error)=>{
+      .then(() => {
+        toast.success("Login Successfull", { ...myTheme, id: toastLoading });
+        navigate('/')
+      })
+      .catch((error) => {
         const errorMessage = error?.message
-        ?.replace("Firebase: Error (", "")
-        ?.replace(")", "");
+          ?.replace("Firebase: Error (", "")
+          ?.replace(")", "");
         toast.error(errorMessage, { ...myTheme, id: toastLoading });
-    })
+      });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    const toastLoading = toast.loading("login in processing", myTheme);
+    loginUser(email, password)
+      .then(() => {
+        toast.success("login Successfull", { ...myTheme, id: toastLoading });
+        navigate('/')
+      })
+      .catch((error) => {
+        const errorMessage = error?.message
+          ?.replace("Firebase: Error (", "")
+          ?.replace(")", "");
+        if (errorMessage.includes("auth/invalid-login-credentials.")) {
+          return toast.error(" Email/Password doesn't match", { ...myTheme, id: toastLoading });
+        }
+        toast.error(errorMessage, { ...myTheme, id: toastLoading });
+      });
+    form.reset();
   };
   return (
     <div className="min-h-screen max-w-[1200px] mx-auto">
@@ -27,7 +51,7 @@ const Login = () => {
           login now
         </h1>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl border border-[#0B666A] bg-base-100">
-          <form className="card-body">
+          <form className="card-body" onSubmit={handleSubmit}>
             <button
               onClick={handleGoogle}
               type="button"

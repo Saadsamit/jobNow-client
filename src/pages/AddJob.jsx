@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { contextProvider } from "../Authprovider";
 const AddJob = () => {
   const [deadline, setDeadline] = useState(new Date());
+  const {user} = useContext(contextProvider)
+  console.log(user);
   const handleSumiit = (e) => {
     e.preventDefault();
     const form = e.target;
     const imgUrl = form.imgUrl.value;
     const title = form.title.value;
-    const userName = "md samit";
+    const userName = user.displayName || "no name found";
     const category = form.category.value;
     const salary =
       form.salary.value + " " + "per" + " " + form.salaryTime.value;
@@ -17,7 +20,7 @@ const AddJob = () => {
     const postDate = new Intl.DateTimeFormat("es").format(date);
     const jobDeadline = new Intl.DateTimeFormat("es").format(deadline);
     const apply = 0;
-    const email = "abc@gmail.com";
+    const email = user.email || "no email found";
     const addJobData = {
       imgUrl,
       title,

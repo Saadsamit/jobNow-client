@@ -1,22 +1,42 @@
 import { Link, NavLink } from "react-router-dom";
 import navLogo from "../../assets/logo.png";
+import { useContext } from "react";
+import { contextProvider } from "../../Authprovider";
+import { CgProfile } from "react-icons/cg";
+import toast from "react-hot-toast";
 const Navbar = () => {
-  //Home, All Jobs, Applied Jobs, Add A Job, My Jobs, Blogs, and User Profile
-  //
+  const { user, logout, myTheme } = useContext(contextProvider);
+  const handleLogout = () => {
+    const toastLoading = toast.loading("login in processing", myTheme);
+    logout()
+      .then(() => {
+        toast.success("Login Successfull", { ...myTheme, id: toastLoading });
+      })
+      .catch((error) => {
+        const errorMessage = error?.message
+          ?.replace("Firebase: Error (", "")
+          ?.replace(")", "");
+        toast.error(errorMessage, { ...myTheme, id: toastLoading });
+      });
+  };
   const links = (
     <>
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
-      <li>
-        <NavLink to="/applied-jobs">Applied Jobs</NavLink>
-      </li>
-      <li>
-        <NavLink to="/add-job">Add A Job</NavLink>
-      </li>
-      <li>
-        <NavLink to="/my-jobs">My Jobs</NavLink>
-      </li>
+      {user ? (
+        <>
+          <li>
+            <NavLink to="/applied-jobs">Applied Jobs</NavLink>
+          </li>
+          <li>
+            <NavLink to="/add-job">Add A Job</NavLink>
+          </li>
+          <li>
+            <NavLink to="/my-jobs">My Jobs</NavLink>
+          </li>
+        </>
+      ) : null}
       <li>
         <NavLink to="/blogs">Blogs</NavLink>
       </li>
@@ -57,7 +77,39 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1 gap-4">{links}</ul>
       </div>
       <div className="navbar-end">
-        <Link to="/login" className="btn font-semibold bg-[#0B666A] text-white hover:bg-[#35A29F]">Login</Link>
+        {user ? (
+          <div className="dropdown dropdown-end">
+            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full">
+                {user.photoURL ? (
+                  <img src={user.photoURL} />
+                ) : (
+                  <div className="flex justify-center items-center h-full">
+                    <CgProfile className="text-2xl"></CgProfile>
+                  </div>
+                )}
+              </div>
+            </label>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[5] p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <a className="justify-between">{user?.displayName}</a>
+              </li>
+              <li onClick={handleLogout}>
+                <a>Logout</a>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <Link
+            to="/login"
+            className="btn font-semibold bg-[#0B666A] text-white hover:bg-[#35A29F]"
+          >
+            Login
+          </Link>
+        )}
       </div>
     </div>
   );

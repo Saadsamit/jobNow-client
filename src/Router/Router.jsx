@@ -10,6 +10,7 @@ import Registration from './../pages/Registration';
 import ErrorPage from "../pages/ErrorPage";
 import PrivateRoute from "./PrivateRoute";
 import Alljobs from "../pages/Alljobs";
+import JobDetail from "../pages/JobDetail";
 
 const Router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const Router = createBrowserRouter([
       {
         path: "blogs",
         element: <Blogs />,
+      },
+      {
+        path: "job-detail/:id",
+        element: <JobDetail/>
       },
       {
         path: 'login',

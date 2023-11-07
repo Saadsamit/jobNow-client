@@ -18,7 +18,7 @@ const JobCart = ({data}) => {
         <p className='text-[#071952]'><span className='font-semibold text-[#0B666A]'>Category:</span> {category}</p>
         <p className='text-[#071952] text-right'><span className='font-semibold text-[#0B666A]'>Post Date:</span> {postDate}</p>
         </div>
-        <h2 className="card-title text-[#071952]"><span className='text-[#0B666A]'>Job:</span> {title}</h2>
+        <h2 className="card-title block text-[#071952]"><span className='text-[#0B666A]'>Job:</span> {title}</h2>
         <p className='text-[#071952]'><span className='font-semibold text-[#0B666A]'>Description:</span> {description.length > 100 ? description.slice(0,100) +"..." : description}</p>
         <p className='text-[#071952]'><span className='font-semibold text-[#0B666A]'>Salary:</span> {salary}</p>
         <p className='text-[#071952]'><span className='font-semibold text-[#0B666A]'>User Name:</span> {userName}</p>
@@ -26,7 +26,7 @@ const JobCart = ({data}) => {
         <p className='text-[#071952]'><span className='font-semibold text-[#0B666A]'>Job Deadline:</span> {jobDeadline}</p>
         <p className='text-[#071952] text-right'><span className='font-semibold text-[#0B666A]'>Apply:</span> {apply}</p>
         </div>
-        <button className="btn font-semibold block bg-[#0B666A] text-white hover:bg-[#35A29F]">Apply</button>
+        <button className="btn font-semibold block bg-[#0B666A] text-white hover:bg-[#35A29F]">Details</button>
       </div>
     </div>
   );

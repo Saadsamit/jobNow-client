@@ -11,3 +11,6 @@ h1,h2,h3,h4,h5,h6,a,button{
 #navBar ul li a.active{
     @apply !text-white bg-[#0B666A] hover:!text-white hover:!bg-[#0B666A] font-semibold
 }
+.react-tabs__tab--selected{
+    @apply bg-[#0B666A] text-white
+}

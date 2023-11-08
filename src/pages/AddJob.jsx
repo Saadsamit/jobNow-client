@@ -2,10 +2,11 @@ import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { contextProvider } from "../Authprovider";
+import useAxios from './../hooks/useAxios';
 const AddJob = () => {
   const [deadline, setDeadline] = useState(new Date());
   const {user} = useContext(contextProvider)
-  console.log(user);
+  const axios = useAxios()
   const handleSumiit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -33,7 +34,9 @@ const AddJob = () => {
       apply,
       email,
     };
-    console.log(addJobData);
+    axios.post("/add-job",addJobData )
+    .then(data=>console.log(data))
+    form.reset()
   };
   return (
    <div className="min-h-screen max-w-[1200px] mx-auto flex flex-col justify-center pb-10">

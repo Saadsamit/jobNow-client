@@ -4,8 +4,10 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import { contextProvider } from "../Authprovider";
 import toast from "react-hot-toast";
+import useAxios from "../hooks/useAxios";
 const Login = () => {
   const [passwordShow, setPasswordShow] = useState(true);
+  const axios = useAxios()
   const { googleLogin, myTheme, loginUser } = useContext(contextProvider);
   const navigate = useNavigate()
   const handleGoogle = () => {
@@ -29,6 +31,13 @@ const Login = () => {
     const password = form.password.value;
     const toastLoading = toast.loading("login in processing", myTheme);
     loginUser(email, password)
+    .then(result => {
+      const user = {email: result.user.email};
+      axios.post('/jwt', user)
+      .then(res=>{
+          console.log(res.data);
+      })
+  })
       .then(() => {
         toast.success("login Successfull", { ...myTheme, id: toastLoading });
         navigate('/')

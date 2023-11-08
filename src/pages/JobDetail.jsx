@@ -36,6 +36,7 @@ const JobDetail = () => {
     };
     console.log(email, name, resume);
     const toastLoading = toast.loading("apply in processing", myTheme);
+    
     if (data?.data?.email === email) {
       toast.error("you cant apply your oun job", {
         ...myTheme,
@@ -80,6 +81,10 @@ const JobDetail = () => {
         navigate("/");
       });
   };
+  const myDate = data?.data?.jobDeadline?.split("/")
+  console.log(myDate);
+  const date = new Date()
+    console.log(date);
   return (
     <div className="flex md:flex-row flex-col gap-5 items-center m-10 p-10 min-h-screen max-w-[1200px] border-2 border-[#0B666A] rounded-xl mx-auto">
       <div className="md:w-1/2">

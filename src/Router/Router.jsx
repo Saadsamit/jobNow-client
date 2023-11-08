@@ -5,18 +5,19 @@ import AppliedJobs from "../pages/AppliedJobs";
 import AddJob from "./../pages/AddJob";
 import MyJobs from "./../pages/MyJobs";
 import Blogs from "./../pages/Blogs";
-import Login from './../pages/Login';
-import Registration from './../pages/Registration';
+import Login from "./../pages/Login";
+import Registration from "./../pages/Registration";
 import ErrorPage from "../pages/ErrorPage";
 import PrivateRoute from "./PrivateRoute";
 import Alljobs from "../pages/Alljobs";
 import JobDetail from "../pages/JobDetail";
+import UpdateJob from "../pages/UpdateJob";
 
 const Router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorPage/>,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -24,19 +25,39 @@ const Router = createBrowserRouter([
       },
       {
         path: "applied-jobs",
-        element: <PrivateRoute><AppliedJobs /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <AppliedJobs />
+          </PrivateRoute>
+        ),
       },
       {
         path: "add-job",
-        element: <PrivateRoute><AddJob /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <AddJob />
+          </PrivateRoute>
+        ),
       },
       {
         path: "all-jobs",
-        element: <Alljobs/>
+        element: <Alljobs />,
       },
       {
         path: "my-jobs",
-        element: <PrivateRoute><MyJobs /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <MyJobs />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "update-job/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateJob />
+          </PrivateRoute>
+        ),
       },
       {
         path: "blogs",
@@ -44,18 +65,22 @@ const Router = createBrowserRouter([
       },
       {
         path: "job-detail/:id",
-        element: <PrivateRoute><JobDetail/></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <JobDetail />
+          </PrivateRoute>
+        ),
       },
       {
-        path: 'login',
-        element: <Login/>
+        path: "login",
+        element: <Login />,
       },
       {
-        path: 'registration',
-        element: <Registration/>
-      }
+        path: "registration",
+        element: <Registration />,
+      },
     ],
-  }
+  },
 ]);
 
 export default Router;

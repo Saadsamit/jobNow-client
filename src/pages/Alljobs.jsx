@@ -43,6 +43,7 @@ const Alljobs = () => {
             <tr>
               <th>Name</th>
               <th>Job Title</th>
+              <th>Apply</th>
               <th>Post date</th>
               <th>Job Deadline</th>
               <th>Salary range</th>
@@ -59,6 +60,7 @@ const Alljobs = () => {
             <tr>
               <th>Name</th>
               <th>Job Title</th>
+              <th>Apply</th>
               <th>Post date</th>
               <th>Job Deadline</th>
               <th>Salary range</th>

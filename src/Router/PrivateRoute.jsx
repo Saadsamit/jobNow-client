@@ -8,7 +8,6 @@ const PrivateRoute = ({children}) => {
     if(isLoading){
         return <div className="min-h-screen flex justify-center items-center"><span className="loading loading-infinity loading-lg"></span></div>
     }
-    console.log(user);
     if(!user?.email){
         return <Navigate to="/login"/>
     }

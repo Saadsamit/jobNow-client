@@ -12,13 +12,13 @@ const UpdateJob = () => {
   const { id } = useParams();
   const getData = async () => {
     const {data} = await axios.get(`/Job-detail/${id}`);
-    // setDeadline(new Date(data?.data?.jobDeadline))
     return data;
   };
   const { data, isLoading } = useQuery({
     queryKey: ["detail"],
     queryFn: getData,
   });
+  
   const MyDate = new Date(data?.jobDeadline)
   const [deadline, setDeadline] = useState(null);
   if (isLoading) {
@@ -33,7 +33,7 @@ const UpdateJob = () => {
     const salary =
       form.salary.value + " " + "per" + " " + form.salaryTime.value;
     const description = form.description.value;
-    const jobDeadline = deadline === null ? MyDate == 'Invalid Date' ? "" : MyDate : new Intl.DateTimeFormat("es").format(deadline);
+    const jobDeadline = deadline === null ? MyDate == 'Invalid Date' ? data.jobDeadline : MyDate : new Intl.DateTimeFormat("es").format(deadline);
     const toastLoading = toast.loading("update is processing", myTheme);
     const UpdateJobData = {
       imgUrl,
@@ -118,7 +118,7 @@ const UpdateJob = () => {
           <select
             className="select select-bordered border-[#0B666A] focus:outline-[#0B666A]"
             name="salaryTime"
-            defaultValue={data?.salary.split(" ")[2]}
+            defaultValue={data?.salary?.split(" ")[2]}
             required
           >
             <option disabled selected>
@@ -131,6 +131,7 @@ const UpdateJob = () => {
         <div className="flex flex-col">
           <h4 className="capitalize ps-2 text-[#0B666A]">job deadline</h4>
           <DatePicker
+          placeholderText={data?.jobDeadline}
             dateFormat="dd/MM/yyyy"
             className="input input-bordered border-[#0B666A] focus:outline-[#0B666A] w-full"
             selected={deadline === null ? MyDate == 'Invalid Date' ? "" : MyDate : deadline}

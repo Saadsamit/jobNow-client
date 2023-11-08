@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-const TableRow = ({ isTrue, data }) => {
+
+const TableRow = ({ isTrue, data,handleClick }) => {
   const { _id, title, userName, apply, salary, jobDeadline, postDate } = data;
+  
   return (
     <tr className="border-b-2 border-[#0B666A]">
       <td>
@@ -19,12 +21,18 @@ const TableRow = ({ isTrue, data }) => {
       {isTrue ? (
         <>
           <th>
-            <Link to={`/update-job/${_id}`} className="btn bg-transparent border-[#0B666A] font-semibold hover:bg-[#0B666A] hover:text-white btn-xs">
+            <Link
+              to={`/update-job/${_id}`}
+              className="btn bg-transparent border-[#0B666A] font-semibold hover:bg-[#0B666A] hover:text-white btn-xs"
+            >
               update
             </Link>
           </th>
           <th>
-            <button className="btn bg-transparent border-[#0B666A] font-semibold hover:bg-[#0B666A] hover:text-white btn-xs">
+            <button
+              onClick={()=>handleClick(_id)}
+              className="btn bg-transparent border-[#0B666A] font-semibold hover:bg-[#0B666A] hover:text-white btn-xs"
+            >
               delete
             </button>
           </th>
@@ -45,5 +53,6 @@ const TableRow = ({ isTrue, data }) => {
 TableRow.propTypes = {
   isTrue: PropTypes.bool.isRequired,
   data: PropTypes.object.isRequired,
+  handleClick: PropTypes.object
 };
 export default TableRow;

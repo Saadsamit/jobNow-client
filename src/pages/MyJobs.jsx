@@ -1,21 +1,45 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxios from "../hooks/useAxios";
 import LoadingText from "../component/LoadingText/LoadingText";
 import TableRow from "../component/TableRow/TableRow";
 import { useContext } from "react";
 import { contextProvider } from './../Authprovider';
-
+import toast from "react-hot-toast";
 const MyJobs = () => {
   const axios = useAxios();
-  const {user} = useContext(contextProvider)
+  const {user,myTheme} = useContext(contextProvider)
   const getData = async () => {
     const res = await axios.get(`/allJobs/${user?.email}`);
     return res;
   };
-  const { data, isLoading } = useQuery({
+  const handleClick = (id) => {
+    const toastLoading = toast.loading("delete is processing", myTheme);
+    axios
+      .delete(`/delete-job/${id}`)
+      .then((data) => {
+        if (data?.data?.deletedCount > 0) {
+          return toast.success("delete Successfull", {
+            ...myTheme,
+            id: toastLoading,
+          });
+        }
+        return toast.error("this is already deleted", {
+          ...myTheme,
+          id: toastLoading,
+        });
+      })
+      .catch((err) => {
+        toast.error(err.message, { ...myTheme, id: toastLoading });
+      });
+  };
+  const { data, isLoading  } = useQuery({
     queryKey: ["MyJobs"],
     queryFn: getData,
   });
+  const {isSuccess} = useMutation({
+    mutationFn: handleClick
+  })
+  console.log(isSuccess);
   if (isLoading) {
     return (
       <div className="min-h-screen max-w-[1200px] mx-auto">
@@ -43,7 +67,7 @@ const MyJobs = () => {
           </thead>
           <tbody>
             {data?.data.map((job) => (
-              <TableRow key={job._id} isTrue={true} data={job} />
+              <TableRow key={job._id} isTrue={true} data={job} handleClick={handleClick} />
             ))}
           </tbody>
           {/* foot */}

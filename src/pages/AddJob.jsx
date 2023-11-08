@@ -3,9 +3,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { contextProvider } from "../Authprovider";
 import useAxios from "./../hooks/useAxios";
+import toast from "react-hot-toast";
 const AddJob = () => {
   const [deadline, setDeadline] = useState(new Date());
-  const { user } = useContext(contextProvider);
+  const { user,myTheme } = useContext(contextProvider);
   const axios = useAxios();
   const handleSumiit = (e) => {
     e.preventDefault();
@@ -34,7 +35,19 @@ const AddJob = () => {
       apply,
       email,
     };
-    axios.post("/add-job", addJobData).then((data) => console.log(data));
+    const toastLoading = toast.loading("add is processing", myTheme);
+    axios.post("/add-job", addJobData)
+    .then((data) => {
+      console.log(data.data.acknowledged);
+      if (data?.data?.acknowledged) {
+        return toast.success("add job Successfull", {
+          ...myTheme,
+          id: toastLoading,
+        });
+      }
+    }).catch((err) => {
+      toast.error(err.message, { ...myTheme, id: toastLoading });
+    });
     form.reset();
   };
   return (

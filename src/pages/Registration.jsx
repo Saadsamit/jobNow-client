@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { contextProvider } from "../Authprovider";
 import { updateProfile } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 const Registration = () => {
   const [passwordShow, setPasswordShow] = useState(true);
   const { createUser,logout,myTheme } = useContext(contextProvider);
+  const Navigate = useNavigate()
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -16,7 +17,7 @@ const Registration = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    const toastLoading = toast.loading("login in processing", myTheme);
+    const toastLoading = toast.loading("Registration in processing", myTheme);
     if (password.length < 6) {
         toast.error("Password must be at least 6 characters",{ ...myTheme, id: toastLoading });
         return;
@@ -36,6 +37,7 @@ const Registration = () => {
         logout()
     }).then(()=>{
         toast.success("Registration Successfull", { ...myTheme, id: toastLoading })
+        Navigate("/login")
     }).catch((error)=>{
         const errorMessage = error?.message
         ?.replace("Firebase: Error (", "")

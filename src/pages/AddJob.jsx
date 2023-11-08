@@ -38,7 +38,6 @@ const AddJob = () => {
     const toastLoading = toast.loading("add is processing", myTheme);
     axios.post("/add-job", addJobData)
     .then((data) => {
-      console.log(data.data.acknowledged);
       if (data?.data?.acknowledged) {
         return toast.success("add job Successfull", {
           ...myTheme,

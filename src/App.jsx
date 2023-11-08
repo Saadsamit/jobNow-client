@@ -1,10 +1,11 @@
-import { Outlet } from "react-router-dom"
+import { Outlet, useLocation } from "react-router-dom"
 import Navbar from "./component/Navbar/Navbar"
 import MyFooter from "./component/Footer/MyFooter"
 import { Toaster } from "react-hot-toast"
 
 function App() {
-
+  // const location = useLocation()
+  // document.title = 'jobNow-' + location.pathname.split('/')[1]
   return (
     <div className="font-Roboto">
       <Navbar/>

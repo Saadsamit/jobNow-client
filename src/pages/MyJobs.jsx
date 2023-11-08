@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import useAxios from "../hooks/useAxios";
 import LoadingText from "../component/LoadingText/LoadingText";
 import TableRow from "../component/TableRow/TableRow";
@@ -36,10 +36,6 @@ const MyJobs = () => {
     queryKey: ["MyJobs"],
     queryFn: getData,
   });
-  const {isSuccess} = useMutation({
-    mutationFn: handleClick
-  })
-  console.log(isSuccess);
   if (isLoading) {
     return (
       <div className="min-h-screen max-w-[1200px] mx-auto">

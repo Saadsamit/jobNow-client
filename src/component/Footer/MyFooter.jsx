@@ -2,7 +2,8 @@ import logo from "../../assets/footerLogo.png";
 const MyFooter = () => {
   return (
     <>
-      <footer className="footer p-10 bg-[#35A29F] text-white">
+    <div className="bg-[#35A29F]">
+    <footer className="footer p-10 max-w-[1200px] mx-auto text-white">
         <aside>
           <img src={logo} alt="" className="w-32" />
           <p>
@@ -25,6 +26,8 @@ const MyFooter = () => {
     </div>
   </nav>
       </footer>
+    </div>
+      
       <footer className="footer footer-center p-4 bg-[#0B666A] text-white">
         <aside>
           <p>Copyright © 2023 - All right reserved by jobNow</p>

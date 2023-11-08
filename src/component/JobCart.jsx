@@ -27,7 +27,7 @@ const JobCart = ({data}) => {
         <p className='text-[#071952]'><span className='font-semibold text-[#0B666A]'>Last Date:</span> {jobDeadline}</p>
         <p className='text-[#071952] text-right'><span className='font-semibold text-[#0B666A]'>Apply:</span> {apply}</p>
         </div>
-        <Link to={`job-detail/${_id}`} className="btn font-semibold bg-[#0B666A] text-white hover:bg-[#35A29F]">Details</Link>
+        <Link to={`/job-detail/${_id}`} className="btn font-semibold bg-[#0B666A] text-white hover:bg-[#35A29F]">Details</Link>
       </div>
     </div>
   );

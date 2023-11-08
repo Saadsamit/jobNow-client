@@ -44,7 +44,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "job-detail/:id",
-        element: <JobDetail/>
+        element: <PrivateRoute><JobDetail/></PrivateRoute>
       },
       {
         path: 'login',

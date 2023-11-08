@@ -5,7 +5,7 @@ import LoadingCard from "../component/LoadingCard/LoadingCard";
 import { useContext } from "react";
 import { contextProvider } from "../Authprovider";
 import toast from "react-hot-toast";
-
+import emailjs from '@emailjs/browser';
 const JobDetail = () => {
   const { id } = useParams();
   const axios = useAxios();
@@ -44,6 +44,13 @@ const JobDetail = () => {
       navigate("/");
       return;
     }
+    var templateParams = {
+      from_name: data?.data?.title,
+      from_email: data?.data?.email,
+      to_email: user?.email,
+      to_name: user?.displayName,
+      message: data?.data?.description,
+  };
     axios
       .post("/apply-job", myObj)
       .then((data) => {
@@ -59,9 +66,17 @@ const JobDetail = () => {
         axios.patch(`/apply/${id}`,apply)
         navigate("/");
       })
+      .then(()=>{
+        emailjs.send('Saadsamit64', 'template_w9torco', templateParams,'P8KCwhwZ5S7GgqBtc')
+        .then(function(response) {
+          console.log('SUCCESS!', response.status, response.text);
+       }, function(error) {
+          console.log('FAILED...', error);
+       });
+         })
       .catch((err) => {
         console.log(err);
-        toast.error(err?.response?.data?.message, { ...myTheme, id: toastLoading });
+        toast.error(err?.response?.data?.message || err?.message, { ...myTheme, id: toastLoading });
         navigate("/");
       });
   };

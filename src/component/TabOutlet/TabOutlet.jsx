@@ -74,9 +74,5 @@ const TabOutlet = () => {
     </div>
   );
 };
-{
-  /* <TabPanel key={idx}>
-            <h2>Any content {idx}</h2>
-          </TabPanel> */
-}
+
 export default TabOutlet;

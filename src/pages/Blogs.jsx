@@ -1,6 +1,6 @@
 const Blogs = () => {
   return (
-    <div className="max-w-[1200px] min-h-screen mx-auto grid grid-cols-2 gap-4 py-20">
+    <div className="max-w-[1200px] min-h-screen mx-auto grid md:grid-cols-2 gap-4 py-20">
       <div className="collapse collapse-plus bg-base-200">
         <input type="radio" name="my-accordion-3" />
         <div className="collapse-title text-xl font-medium">

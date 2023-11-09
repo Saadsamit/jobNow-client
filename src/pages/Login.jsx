@@ -8,15 +8,24 @@ import useAxios from "../hooks/useAxios";
 const Login = () => {
   const [passwordShow, setPasswordShow] = useState(true);
   const axios = useAxios()
-  const { googleLogin, myTheme, loginUser } = useContext(contextProvider);
+  const { googleLogin, myTheme, loginUser,logout } = useContext(contextProvider);
   const navigate = useNavigate()
   const handleGoogle = () => {
     const toastLoading = toast.loading("login in processing", myTheme);
     googleLogin()
-      .then(() => {
-        toast.success("Login Successfull", { ...myTheme, id: toastLoading });
-        navigate('/')
-      })
+      .then(data => {
+        const user = {email: data.user.email};
+        axios.post('/jwt', user)
+        .then((res)=>{
+            console.log(res.data);
+        }).catch(()=>{
+          logout()
+        })
+    })
+    .then(() => {
+      toast.success("Login Successfull", { ...myTheme, id: toastLoading });
+      navigate('/')
+    })
       .catch((error) => {
         const errorMessage = error?.message
           ?.replace("Firebase: Error (", "")
@@ -34,9 +43,11 @@ const Login = () => {
     .then(result => {
       const user = {email: result.user.email};
       axios.post('/jwt', user)
-      .then(res=>{
-          console.log(res.data);
-      })
+        .then((res)=>{
+            console.log(res.data);
+        }).catch(()=>{
+          logout()
+        })
   })
       .then(() => {
         toast.success("login Successfull", { ...myTheme, id: toastLoading });

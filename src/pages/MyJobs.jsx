@@ -7,6 +7,7 @@ import { contextProvider } from './../Authprovider';
 import toast from "react-hot-toast";
 const MyJobs = () => {
   const axios = useAxios();
+  let isTrue =  true
   const {user,myTheme} = useContext(contextProvider)
   const getData = async () => {
     const res = await axios.get(`/allJobs/${user?.email}`);
@@ -17,7 +18,9 @@ const MyJobs = () => {
     axios
       .delete(`/delete-job/${id}`)
       .then((data) => {
+        isTrue = false
         if (data?.data?.deletedCount > 0) {
+          refetch()
           return toast.success("delete Successfull", {
             ...myTheme,
             id: toastLoading,
@@ -32,9 +35,10 @@ const MyJobs = () => {
         toast.error(err.message, { ...myTheme, id: toastLoading });
       });
   };
-  const { data, isLoading  } = useQuery({
+  const { data, isLoading,refetch  } = useQuery({
     queryKey: ["MyJobs"],
     queryFn: getData,
+    enabled: isTrue,
   });
   if (isLoading) {
     return (

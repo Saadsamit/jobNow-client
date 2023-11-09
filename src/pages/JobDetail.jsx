@@ -38,7 +38,7 @@ const JobDetail = () => {
     const toastLoading = toast.loading("apply in processing", myTheme);
     
     if (data?.data?.email === email) {
-      toast.error("you cant apply your oun job", {
+      toast.error("you cant apply your own job", {
         ...myTheme,
         id: toastLoading,
       });

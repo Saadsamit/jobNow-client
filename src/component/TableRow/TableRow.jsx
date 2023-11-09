@@ -53,6 +53,6 @@ const TableRow = ({ isTrue, data,handleClick }) => {
 TableRow.propTypes = {
   isTrue: PropTypes.bool.isRequired,
   data: PropTypes.object.isRequired,
-  handleClick: PropTypes.object
+  handleClick: PropTypes.func
 };
 export default TableRow;

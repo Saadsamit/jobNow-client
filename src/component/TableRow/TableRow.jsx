@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 
 const TableRow = ({ isTrue, data,handleClick }) => {
   const { _id, title, userName, apply, salary, jobDeadline, postDate } = data;
-  
+  const RawJobDeadline = new Date(jobDeadline)
+  const RawPostDate = new Date(postDate)
+  const Deadline = new Intl.DateTimeFormat("es").format(RawJobDeadline);
+  const PostDate = new Intl.DateTimeFormat("es").format(RawPostDate);
   return (
     <tr className="border-b-2 border-[#0B666A]">
       <td>
@@ -15,8 +18,8 @@ const TableRow = ({ isTrue, data,handleClick }) => {
       </td>
       <td>{title}</td>
       <td>{apply}</td>
-      <td>{postDate}</td>
-      <td>{jobDeadline}</td>
+      <td>{PostDate}</td>
+      <td>{Deadline}</td>
       <td>{salary}</td>
       {isTrue ? (
         <>

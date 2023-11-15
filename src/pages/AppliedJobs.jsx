@@ -12,7 +12,7 @@ const AppliedJobs = () => {
     const res = axios.get(`/applied-job?email=${user?.email}`);
     return res;
   };
-  const { data, isLoading } = useQuery({
+  const { data = [], isLoading } = useQuery({
     queryKey: ["addliedJobs"],
     queryFn: getData,
   });

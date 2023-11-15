@@ -6,7 +6,7 @@ import useAxios from "./../hooks/useAxios";
 import toast from "react-hot-toast";
 const AddJob = () => {
   const [deadline, setDeadline] = useState(new Date());
-  const { user,myTheme } = useContext(contextProvider);
+  const { user, myTheme } = useContext(contextProvider);
   const axios = useAxios();
   const handleSumiit = (e) => {
     e.preventDefault();
@@ -18,9 +18,9 @@ const AddJob = () => {
     const salary =
       form.salary.value + " " + "per" + " " + form.salaryTime.value;
     const description = form.description.value;
-    const date = Date.now();
-    const postDate = new Intl.DateTimeFormat("es").format(date);
-    const jobDeadline = new Intl.DateTimeFormat("es").format(deadline);
+    const date = new Date(Date.now());
+    const postDate = date.toISOString();
+    const jobDeadline = deadline.toISOString();
     const apply = 0;
     const email = user.email || "no email found";
     const addJobData = {
@@ -36,18 +36,21 @@ const AddJob = () => {
       email,
     };
     const toastLoading = toast.loading("add is processing", myTheme);
-    axios.post("/add-job", addJobData)
-    .then((data) => {
-      if (data?.data?.acknowledged) {
-        return toast.success("add job Successfull", {
-          ...myTheme,
-          id: toastLoading,
-        });
-      }
-    }).catch((err) => {
-      toast.error(err.message, { ...myTheme, id: toastLoading });
-    });
-    form.reset();
+    axios
+      .post("/add-job", addJobData)
+      .then((data) => {
+        if (data?.data?.acknowledged) {
+          return toast.success("add job Successfull", {
+            ...myTheme,
+            id: toastLoading,
+          });
+        }
+        form.reset();
+      })
+      .catch((err) => {
+        toast.error(err.message, { ...myTheme, id: toastLoading });
+      });
+    
   };
   return (
     <div className="min-h-screen max-w-[1200px] mx-auto flex flex-col justify-center pb-10">

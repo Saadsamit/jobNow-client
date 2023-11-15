@@ -22,6 +22,10 @@ const JobDetail = () => {
   if (isLoading) {
     return <LoadingCard />;
   }
+  const RawJobDeadline = new Date(data?.data?.jobDeadline)
+  const RawPostDate = new Date(data?.data?.postDate)
+  const Deadline = new Intl.DateTimeFormat("es").format(RawJobDeadline);
+  const PostDate = new Intl.DateTimeFormat("es").format(RawPostDate);
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -34,11 +38,22 @@ const JobDetail = () => {
       resume,
       applyData: data?.data?._id,
     };
+    const JobDeadline = RawJobDeadline.valueOf()
+    const Today = Date.now()
     console.log(email, name, resume);
     const toastLoading = toast.loading("apply in processing", myTheme);
     
     if (data?.data?.email === email) {
       toast.error("you cant apply your own job", {
+        ...myTheme,
+        id: toastLoading,
+      });
+      navigate("/");
+      return;
+    }
+    
+    if(JobDeadline < Today){
+      toast.error("the job Deadline is over", {
         ...myTheme,
         id: toastLoading,
       });
@@ -81,10 +96,6 @@ const JobDetail = () => {
         navigate("/");
       });
   };
-  const myDate = data?.data?.jobDeadline?.split("/")
-  console.log(myDate);
-  const date = new Date()
-    console.log(date);
   return (
     <div className="flex md:flex-row flex-col gap-5 items-center m-10 p-10 min-h-screen max-w-[1200px] border-2 border-[#0B666A] rounded-xl mx-auto">
       <div className="md:w-1/2">
@@ -105,7 +116,7 @@ const JobDetail = () => {
             <span className="font-Poppins font-semibold text-[#0B666A] sm:text-xl text-lg capitalize">
               post Date:
             </span>{" "}
-            {data?.data?.postDate}
+            {PostDate}
           </p>
         </div>
         <h2 className="text-[#071952] sm:text-2xl text-xl py-4 font-semibold">
@@ -137,7 +148,7 @@ const JobDetail = () => {
             <span className="font-Poppins font-semibold text-[#0B666A] sm:text-xl text-lg capitalize">
               last date:
             </span>{" "}
-            {data?.data?.jobDeadline}
+            {Deadline}
           </p>
           <p className="text-[#071952]">
             <span className="font-Poppins font-semibold text-[#0B666A] sm:text-xl text-lg capitalize">

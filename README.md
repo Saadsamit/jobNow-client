@@ -1,3 +1,8 @@
+# jobNow
+https://jobnow-8f105.firebaseapp.com
+
+
+
 <ul>
 <li>in our you can post job</li>
 <li>you can apply job</li>
@@ -7,3 +12,15 @@
 <li>in add job page you can search job base on  title </li>
 <li>in applied job page you can see your all apply jobs</li>
 </ul>
+
+# technology I use
+- Html 
+- Css 
+- Tailwind Css
+- Javascript
+- React
+- Express
+- Mongodb
+- Firebase
+- jwt 
+- imgbb
